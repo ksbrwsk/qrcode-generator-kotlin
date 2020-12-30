@@ -23,6 +23,7 @@ class QrCodeController(
     val pageQrCodePhone = "qr-code-phone"
     val pageQrCodeVCard = "qr-code-vcard"
     val pageQrCodeEmail = "qr-code-email"
+    val pageQrCodeSms = "qr-code-sms"
     val qrCodeImage = "image"
     val textToBeEncoded = "text"
     val successMessage = "successMessage"
@@ -103,6 +104,29 @@ class QrCodeController(
             return pageResult
         }
         return pageQrCodeEmail
+    }
+
+    @GetMapping("/qr-code-sms")
+    fun qrCodeSms(model: Model): String? {
+        addCommonModelAttributes(model)
+        model.addAttribute("qrCodeSms", QrCodeSms(""))
+        return pageQrCodeSms
+    }
+
+    @PostMapping("/process/sms")
+    fun processSms(
+        model: Model,
+        @ModelAttribute("qrCodeSms") @Valid qrCodeSms: QrCodeSms?,
+        bindingResult: BindingResult
+    ): String? {
+        addCommonModelAttributes(model)
+        if (!bindingResult.hasErrors()) {
+            log.info("generate QR Code for SMS {}", qrCodeSms!!.phoneToBeEncoded)
+            val result = qrCodeEncoder.generateQrCodeSms(qrCodeSms)
+            addResultModelAttributes(model, result!!)
+            return pageResult
+        }
+        return pageQrCodeSms
     }
 
     @GetMapping("/qr-code-vcard")

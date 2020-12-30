@@ -1,9 +1,6 @@
 package de.ksbrwsk.qrcode.web
 
-import de.ksbrwsk.qrcode.model.QrCodeEmail
-import de.ksbrwsk.qrcode.model.QrCodePhone
-import de.ksbrwsk.qrcode.model.QrCodeUrl
-import de.ksbrwsk.qrcode.model.QrCodeVCard
+import de.ksbrwsk.qrcode.model.*
 import de.ksbrwsk.qrcode.utils.TestUtils
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -90,6 +87,29 @@ internal class QrCodeControllerTest(@Autowired val qrCodeController: QrCodeContr
         assertNotNull(actual)
         assertEquals(expected, actual)
         assertNotNull(model["qrCodeEmail"])
+    }
+
+    @Test
+    fun thatProcessQrCodeSmsPasses() {
+        val expected = "result"
+        val qrCodeSms = QrCodeSms("+49123456789")
+        val model: BindingAwareModelMap = TestUtils.createModel()
+        val bindingResult: BindingResult = TestUtils.createBindingResult(qrCodeSms)
+        val actual: String? = qrCodeController.processSms(model, qrCodeSms, bindingResult)
+        assertNotNull(actual)
+        assertEquals(expected, actual)
+        assertNotNull(model["image"])
+        assertNull(model["qrCodeEmail"])
+    }
+
+    @Test
+    fun thatQrCodeSmsPasses() {
+        val expected = "qr-code-sms"
+        val model: BindingAwareModelMap = TestUtils.createModel()
+        val actual: String? = qrCodeController.qrCodeSms(model)
+        assertNotNull(actual)
+        assertEquals(expected, actual)
+        assertNotNull(model["qrCodeSms"])
     }
 
     @Test

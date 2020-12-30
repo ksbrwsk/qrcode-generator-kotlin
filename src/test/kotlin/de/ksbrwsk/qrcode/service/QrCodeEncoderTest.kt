@@ -29,13 +29,33 @@ internal class QrCodeEncoderTest(@Autowired val qrCodeEncoder: QrCodeEncoder) {
         assertNotNull(result.image)
         assertNotNull(result.encodedText)
         assertFalse(result.hasError())
-
     }
 
     @Test
     fun generateQrCodeEmailAndSubject() {
         val qrCodeEmail = QrCodeEmail("email@email.com", "just a test")
         val result = qrCodeEncoder.generateQrCodeEmail(qrCodeEmail)
+        assertTrue(result!!.isSuccessfull())
+        assertNotNull(result.image)
+        assertNotNull(result.encodedText)
+        assertFalse(result.hasError())
+    }
+
+    @Test
+    fun generateQrCodeSms() {
+        val qrCodeSms = QrCodeSms("+491234567890")
+        val result = qrCodeEncoder.generateQrCodeSms(qrCodeSms)
+        assertNotNull(result)
+        assertTrue(result!!.isSuccessfull())
+        assertNotNull(result.image)
+        assertNotNull(result.encodedText)
+        assertFalse(result.hasError())
+    }
+
+    @Test
+    fun generateQrCodeSmsAndMessage() {
+        val qrCodeSms = QrCodeSms("+49123456789", "just a test")
+        val result = qrCodeEncoder.generateQrCodeSms(qrCodeSms)
         assertTrue(result!!.isSuccessfull())
         assertNotNull(result.image)
         assertNotNull(result.encodedText)

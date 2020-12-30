@@ -34,6 +34,11 @@ class QrCodeEncoder {
         return generateImageAsBase64(extracted)
     }
 
+    fun generateQrCodeSms(qrCodeSms: QrCodeSms?): QrCodeProcessingResult? {
+        val extracted = QrCodeSmsParser(qrCodeSms!!).parse()
+        return generateImageAsBase64(extracted)
+    }
+
     fun generateQrCodePhone(qrCodePhone: QrCodePhone?): QrCodeProcessingResult? {
         val extracted = QrCodePhoneParser(qrCodePhone!!).parse()
         return generateImageAsBase64(extracted)
