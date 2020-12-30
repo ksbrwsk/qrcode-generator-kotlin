@@ -10,7 +10,7 @@
     </parent>
     <groupId>de.ksbrwsk</groupId>
     <artifactId>qrcode-generator-kotlin</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>qrcode-generator-kotlin</name>
     <description>Kotlin Spring Boot demo with ZXing.</description>
 

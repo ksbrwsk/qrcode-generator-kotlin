@@ -5,8 +5,7 @@ import de.ksbrwsk.qrcode.model.QrCodePhone
 import de.ksbrwsk.qrcode.model.QrCodeUrl
 import de.ksbrwsk.qrcode.model.QrCodeVCard
 import de.ksbrwsk.qrcode.utils.TestUtils
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -44,7 +43,7 @@ internal class QrCodeControllerTest(@Autowired val qrCodeController: QrCodeContr
         assertNotNull(actual)
         assertEquals(expected, actual)
         assertNotNull(model["image"])
-        assertNotNull(model["qrCodeUrl"])
+        assertNull(model["qrCodeUrl"])
     }
 
     @Test
@@ -57,7 +56,7 @@ internal class QrCodeControllerTest(@Autowired val qrCodeController: QrCodeContr
         assertNotNull(actual)
         assertEquals(expected, actual)
         assertNotNull(model["image"])
-        assertNotNull(model["qrCodePhone"])
+        assertNull(model["qrCodePhone"])
     }
 
     @Test
@@ -80,7 +79,7 @@ internal class QrCodeControllerTest(@Autowired val qrCodeController: QrCodeContr
         assertNotNull(actual)
         assertEquals(expected, actual)
         assertNotNull(model["image"])
-        assertNotNull(model["qrCodeEmail"])
+        assertNull(model["qrCodeEmail"])
     }
 
     @Test
@@ -103,7 +102,7 @@ internal class QrCodeControllerTest(@Autowired val qrCodeController: QrCodeContr
         assertNotNull(actual)
         assertEquals(expected, actual)
         assertNotNull(model["image"])
-        assertNotNull(model["qrCodeVCard"])
+        assertNull(model["qrCodeVCard"])
     }
 
     @Test

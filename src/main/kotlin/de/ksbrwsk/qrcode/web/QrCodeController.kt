@@ -50,7 +50,6 @@ class QrCodeController(
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
-        model.addAttribute("qrCodeUrl", qrCodeUrl)
         if (!bindingResult.hasErrors()) {
             log.info("generate QR Code for Url {}", qrCodeUrl!!.urlToBeEncoded)
             val result = qrCodeEncoder.generateQrCodeUrl(qrCodeUrl)
@@ -74,7 +73,6 @@ class QrCodeController(
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
-        model.addAttribute("qrCodePhone", qrCodePhone)
         if (!bindingResult.hasErrors()) {
             log.info("generate QR Code for Phone number {}", qrCodePhone!!.phoneToBeEncoded)
             val result = qrCodeEncoder.generateQrCodePhone(qrCodePhone)
@@ -98,7 +96,6 @@ class QrCodeController(
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
-        model.addAttribute("qrCodeEmail", qrCodeEmail)
         if (!bindingResult.hasErrors()) {
             log.info("generate QR Code for Email {}", qrCodeEmail!!.emailToBeEncoded)
             val result = qrCodeEncoder.generateQrCodeEmail(qrCodeEmail)
@@ -122,7 +119,6 @@ class QrCodeController(
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
-        model.addAttribute("qrCodeVCard", qrCodeVCard)
         if (!bindingResult.hasErrors()) {
             log.info("generate QR Code for VCard {}", qrCodeVCard!!.name)
             val result = qrCodeEncoder.generateQrCodeVCard(qrCodeVCard)
