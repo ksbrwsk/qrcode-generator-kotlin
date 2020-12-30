@@ -56,12 +56,8 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeUrl(qrCodeUrl)
             addResultModelAttributes(model, result!!)
             return pageResult
-        } else {
-            val result = QrCodeProcessingResult()
-            result.errorMessage = "URL ${bindingResult.allErrors[0].defaultMessage}"
-            addResultModelAttributes(model, result)
-            return pageQrCodeUrl
         }
+        return pageQrCodeUrl
     }
 
     @GetMapping("/qr-code-phone")
@@ -84,12 +80,8 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodePhone(qrCodePhone)
             addResultModelAttributes(model, result!!)
             return pageResult
-        } else {
-            val result = QrCodeProcessingResult()
-            result.errorMessage = "Phone number ${bindingResult.allErrors[0].defaultMessage}"
-            addResultModelAttributes(model, result)
-            return pageQrCodePhone
         }
+        return pageQrCodePhone
     }
 
     @GetMapping("/qr-code-email")
@@ -112,12 +104,8 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeEmail(qrCodeEmail)
             addResultModelAttributes(model, result!!)
             return pageResult
-        } else {
-            val result = QrCodeProcessingResult()
-            result.errorMessage = "Email ${bindingResult.allErrors[0].defaultMessage}"
-            addResultModelAttributes(model, result)
-            return pageQrCodeEmail
         }
+        return pageQrCodeEmail
     }
 
     @GetMapping("/qr-code-vcard")
@@ -140,12 +128,8 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeVCard(qrCodeVCard)
             addResultModelAttributes(model, result!!)
             return pageResult
-        } else {
-            val result = QrCodeProcessingResult()
-            result.errorMessage = "VCard not valid"
-            addResultModelAttributes(model, result)
-            return pageQrCodeVCard
         }
+        return pageQrCodeVCard
     }
 
     private fun addCommonModelAttributes(model: Model) {
