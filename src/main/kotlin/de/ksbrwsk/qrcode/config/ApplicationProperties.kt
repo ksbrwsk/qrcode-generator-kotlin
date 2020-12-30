@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component
 
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 @Component
-data class ApplicationProperties (
+data class ApplicationProperties(
     var title: String = "",
     var appInfo: String = ""
 )

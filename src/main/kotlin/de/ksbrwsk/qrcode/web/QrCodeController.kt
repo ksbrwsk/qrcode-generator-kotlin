@@ -17,7 +17,6 @@ class QrCodeController(
     val applicationProperties: ApplicationProperties,
     val qrCodeEncoder: QrCodeEncoder
 ) {
-
     val pageIndex = "index"
     val pageResult = "result"
     val pageQrCodeUrl = "qr-code-url"
@@ -47,7 +46,7 @@ class QrCodeController(
     @PostMapping("/process/url")
     fun processUrl(
         model: Model,
-        @ModelAttribute("qrCodeUrl") qrCodeUrl: @Valid QrCodeUrl?,
+        @ModelAttribute("qrCodeUrl") @Valid qrCodeUrl: QrCodeUrl?,
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
@@ -57,8 +56,12 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeUrl(qrCodeUrl)
             addResultModelAttributes(model, result!!)
             return pageResult
+        } else {
+            val result = QrCodeProcessingResult()
+            result.errorMessage = "URL ${bindingResult.allErrors[0].defaultMessage}"
+            addResultModelAttributes(model, result)
+            return pageQrCodeUrl
         }
-        return pageQrCodeUrl
     }
 
     @GetMapping("/qr-code-phone")
@@ -71,7 +74,7 @@ class QrCodeController(
     @PostMapping("/process/phone")
     fun processPhone(
         model: Model,
-        @ModelAttribute("qrCodePhone") qrCodePhone: @Valid QrCodePhone?,
+        @ModelAttribute("qrCodePhone") @Valid qrCodePhone: QrCodePhone?,
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
@@ -81,8 +84,12 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodePhone(qrCodePhone)
             addResultModelAttributes(model, result!!)
             return pageResult
+        } else {
+            val result = QrCodeProcessingResult()
+            result.errorMessage = "Phone number ${bindingResult.allErrors[0].defaultMessage}"
+            addResultModelAttributes(model, result)
+            return pageQrCodePhone
         }
-        return pageQrCodePhone
     }
 
     @GetMapping("/qr-code-email")
@@ -95,7 +102,7 @@ class QrCodeController(
     @PostMapping("/process/email")
     fun processEmail(
         model: Model,
-        @ModelAttribute("qrCodeEmail") qrCodeEmail: @Valid QrCodeEmail?,
+        @ModelAttribute("qrCodeEmail") @Valid qrCodeEmail: QrCodeEmail?,
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
@@ -105,8 +112,12 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeEmail(qrCodeEmail)
             addResultModelAttributes(model, result!!)
             return pageResult
+        } else {
+            val result = QrCodeProcessingResult()
+            result.errorMessage = "Email ${bindingResult.allErrors[0].defaultMessage}"
+            addResultModelAttributes(model, result)
+            return pageQrCodeEmail
         }
-        return pageQrCodeEmail
     }
 
     @GetMapping("/qr-code-vcard")
@@ -119,7 +130,7 @@ class QrCodeController(
     @PostMapping("/process/vcard")
     fun processVCard(
         model: Model,
-        @ModelAttribute("qrCodeVCard") qrCodeVCard: @Valid QrCodeVCard?,
+        @ModelAttribute("qrCodeVCard") @Valid qrCodeVCard: QrCodeVCard?,
         bindingResult: BindingResult
     ): String? {
         addCommonModelAttributes(model)
@@ -129,8 +140,12 @@ class QrCodeController(
             val result = qrCodeEncoder.generateQrCodeVCard(qrCodeVCard)
             addResultModelAttributes(model, result!!)
             return pageResult
+        } else {
+            val result = QrCodeProcessingResult()
+            result.errorMessage = "VCard not valid"
+            addResultModelAttributes(model, result)
+            return pageQrCodeVCard
         }
-        return pageQrCodeVCard
     }
 
     private fun addCommonModelAttributes(model: Model) {

@@ -8,7 +8,7 @@ internal class QrCodeEmailParserTest {
     internal fun shouldParseEmailNoSubject() {
         val expected = "mailto:email@email.com"
         val qrCodeEmail = QrCodeEmail("email@email.com")
-        assertEquals(QrCodeEmailParser(qrCodeEmail).parse(), expected);
+        assertEquals(QrCodeEmailParser(qrCodeEmail).parse(), expected)
     }
 
     @Test

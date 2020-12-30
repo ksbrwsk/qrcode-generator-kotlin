@@ -6,7 +6,7 @@ class QrCodeProcessingResult {
     var successMessage: String? = ""
     var errorMessage: String? = ""
 
-    fun isSuccessfull(): Boolean =  !successMessage.isNullOrEmpty()
-    fun hasError(): Boolean =  !errorMessage.isNullOrEmpty()
+    fun isSuccessfull(): Boolean = !successMessage.isNullOrEmpty()
+    fun hasError(): Boolean = !errorMessage.isNullOrEmpty()
 
 }

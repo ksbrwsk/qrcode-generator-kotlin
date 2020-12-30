@@ -13,6 +13,7 @@ class TestUtils {
             localValidatorFactoryBean.afterPropertiesSet()
             return localValidatorFactoryBean
         }
+
         fun createBindingResult(qrCodeModel: Any?): BindingResult {
             val dataBinder = DataBinder(qrCodeModel)
             dataBinder.validator = createLocalValidatorFactoryBean()

@@ -4,7 +4,7 @@ class QrCodeEmailParser(private val qrCodeEmail: QrCodeEmail) : AbstractQrCodePa
 
     override fun parse(): String {
         var toEncode = "mailto:${qrCodeEmail.emailToBeEncoded}"
-        if(!qrCodeEmail.subjectToBeEncoded.isNullOrEmpty()) toEncode += "?subject=${qrCodeEmail.subjectToBeEncoded}"
+        if (!qrCodeEmail.subjectToBeEncoded.isNullOrEmpty()) toEncode += "?subject=${qrCodeEmail.subjectToBeEncoded}"
         return toEncode.replace(" ", "%20")
     }
 }

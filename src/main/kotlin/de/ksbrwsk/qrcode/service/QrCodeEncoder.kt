@@ -2,7 +2,6 @@ package de.ksbrwsk.qrcode.service
 
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
-import com.google.zxing.WriterException
 import com.google.zxing.qrcode.QRCodeWriter
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import de.ksbrwsk.qrcode.model.*
@@ -14,7 +13,6 @@ import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.io.File
-import java.io.IOException
 import java.util.*
 import javax.imageio.ImageIO
 
@@ -25,6 +23,26 @@ class QrCodeEncoder {
 
     val size = 250
     val fileType = "png"
+
+    fun generateQrCodeUrl(qrCodeUrl: QrCodeUrl?): QrCodeProcessingResult? {
+        val extracted = QrCodeUrlParser(qrCodeUrl!!).parse()
+        return generateImageAsBase64(extracted)
+    }
+
+    fun generateQrCodeEmail(qrCodeEmail: QrCodeEmail?): QrCodeProcessingResult? {
+        val extracted = QrCodeEmailParser(qrCodeEmail!!).parse()
+        return generateImageAsBase64(extracted)
+    }
+
+    fun generateQrCodePhone(qrCodePhone: QrCodePhone?): QrCodeProcessingResult? {
+        val extracted = QrCodePhoneParser(qrCodePhone!!).parse()
+        return generateImageAsBase64(extracted)
+    }
+
+    fun generateQrCodeVCard(qrCodeVCard: QrCodeVCard?): QrCodeProcessingResult? {
+        val extracted: String = QrCodeVCardParser(qrCodeVCard!!).parse()
+        return generateImageAsBase64(extracted)
+    }
 
     private fun generateImageAsBase64(textToBeEncoded: String): QrCodeProcessingResult? {
         val result = QrCodeProcessingResult()
@@ -54,11 +72,7 @@ class QrCodeEncoder {
             val bytes = FileUtils.readFileToByteArray(myFile)
             imageText = "data:image/png;base64,${Base64Utils.encodeToString(bytes)}"
             result.image = imageText
-        } catch (e: WriterException) {
-            val msg = "Processing QR code failed."
-            log.error(msg, e)
-            result.errorMessage = msg
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             val msg = "Processing QR code failed."
             log.error(msg, e)
             result.errorMessage = msg
@@ -68,25 +82,6 @@ class QrCodeEncoder {
         return result
     }
 
-    fun generateQrCodeUrl(qrCodeUrl: QrCodeUrl?): QrCodeProcessingResult? {
-        val extracted = QrCodeUrlParser(qrCodeUrl!!).parse()
-        return generateImageAsBase64(extracted)
-    }
-
-    fun generateQrCodeEmail(qrCodeEmail: QrCodeEmail?): QrCodeProcessingResult? {
-        val extracted = QrCodeEmailParser(qrCodeEmail!!).parse()
-        return generateImageAsBase64(extracted)
-    }
-
-    fun generateQrCodePhone(qrCodePhone: QrCodePhone?): QrCodeProcessingResult? {
-        val extracted = QrCodePhoneParser(qrCodePhone!!).parse()
-        return generateImageAsBase64(extracted)
-    }
-
-    fun generateQrCodeVCard(qrCodeVCard: QrCodeVCard?): QrCodeProcessingResult? {
-        val extracted: String = QrCodeVCardParser(qrCodeVCard!!).parse()
-        return generateImageAsBase64(extracted)
-    }
 
     private fun createHintMap(): MutableMap<EncodeHintType, Any?> {
         val hintMap: MutableMap<EncodeHintType, Any?> = EnumMap(EncodeHintType::class.java)

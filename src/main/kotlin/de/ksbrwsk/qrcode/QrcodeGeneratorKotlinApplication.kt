@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class QrcodeGeneratorKotlinApplication
 
 fun main(args: Array<String>) {
-	runApplication<QrcodeGeneratorKotlinApplication>(*args)
+    runApplication<QrcodeGeneratorKotlinApplication>(*args)
 }
