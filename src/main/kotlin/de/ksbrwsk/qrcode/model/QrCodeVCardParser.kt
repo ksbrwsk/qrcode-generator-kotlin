@@ -1,79 +1,61 @@
 package de.ksbrwsk.qrcode.model
 
-import org.apache.commons.lang3.StringUtils
-
 class QrCodeVCardParser(val qrCodeVCard: QrCodeVCard) : AbstractQrCodeParser() {
 
     override fun parse(): String {
-        val builder: StringBuilder = StringBuilder("BEGIN:VCARD\n")
-            .append("VERSION:4.0\n")
-            .append("N:")
-            .append(this.qrCodeVCard.lastname)
-            .append(";")
-            .append(this.qrCodeVCard.name)
-            .append(";;;\n")
-            .append("FN:")
-            .append(this.qrCodeVCard.name)
-            .append(" ")
-            .append(this.qrCodeVCard.lastname)
-            .append("\n")
-
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.title)) {
-            builder.append("TITLE:")
-            builder.append(this.qrCodeVCard.title)
-            builder.append("\n")
+        var vcard = """
+            BEGIN:VCARD
+            VERSION:4.0
+            N:${qrCodeVCard.lastname};${qrCodeVCard.name};;;
+            FN:${qrCodeVCard.name} ${qrCodeVCard.lastname}${'\n'}
+        """.trimIndent()
+        if (!qrCodeVCard.title.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                TITLE:${qrCodeVCard.title}${'\n'}
+            """.trimIndent()
+            )
         }
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.organisation)) {
-            builder.append("ORG:")
-            builder.append(this.qrCodeVCard.organisation)
-            builder.append("\n")
+        if (!qrCodeVCard.organisation.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                ORG:${qrCodeVCard.organisation}${'\n'}
+            """.trimIndent()
+            )
         }
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.email1)) {
-            builder.append("EMAIL:")
-                .append(this.qrCodeVCard.email1)
-                .append("\n")
+        if (!qrCodeVCard.email1.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                EMAIL:${qrCodeVCard.email1}${'\n'}
+            """.trimIndent()
+            )
         }
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.email2)) {
-            builder.append("EMAIL:")
-                .append(this.qrCodeVCard.email2)
-                .append("\n")
+        if (!qrCodeVCard.email2.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                EMAIL:${qrCodeVCard.email2}${'\n'}
+            """.trimIndent()
+            )
         }
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.phone1)) {
-            builder.append("TEL;TYPE=")
-                .append(this.qrCodeVCard.phone1Type)
-                .append(":")
-                .append(this.qrCodeVCard.phone1)
-                .append("\n")
+        if (!qrCodeVCard.phone1.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                TEL;TYPE=:${qrCodeVCard.phone1Type}:${qrCodeVCard.phone1}${'\n'}
+            """.trimIndent()
+            )
         }
-        if (StringUtils.isNotEmpty(this.qrCodeVCard.adress1Street)) {
-            builder.append("ADR;TYPE=")
-                .append(this.qrCodeVCard.adress1Type)
-                .append(":;;")
-                .append(this.qrCodeVCard.adress1Street)
-                .append(";")
-                .append(this.qrCodeVCard.adress1Locality)
-                .append(";")
-                .append(this.qrCodeVCard.adress1Region)
-                .append(";")
-                .append(this.qrCodeVCard.adress1PostalCode)
-                .append(";")
-                .append(this.qrCodeVCard.adress1Country)
-                .append("\n")
-                .append("LABEL;TYPE=")
-                .append(this.qrCodeVCard.adress1Type)
-                .append(":")
-                .append(this.qrCodeVCard.adress1Street)
-                .append("\n")
-                .append(this.qrCodeVCard.adress1Locality)
-                .append(",")
-                .append(this.qrCodeVCard.adress1Region)
-                .append(" ")
-                .append(this.qrCodeVCard.adress1PostalCode)
-                .append("\n")
-                .append(this.qrCodeVCard.adress1Country)
-                .append("\n")
+        if (!qrCodeVCard.adress1Street.isNullOrEmpty()) {
+            vcard = vcard.plus(
+                """
+                ADR;TYPE=${qrCodeVCard.adress1Type}:;;${qrCodeVCard.adress1Street};${qrCodeVCard.adress1Locality};${qrCodeVCard.adress1Region};${qrCodeVCard.adress1PostalCode};${qrCodeVCard.adress1Country}${'\n'}
+                LABEL;TYPE=${qrCodeVCard.adress1Type}:${qrCodeVCard.adress1Street}${'\n'}
+                ${qrCodeVCard.adress1Locality},${qrCodeVCard.adress1Region}${'\n'}
+                ${qrCodeVCard.adress1PostalCode}${'\n'}
+                ${qrCodeVCard.adress1Country}
+            """.trimIndent()
+            )
         }
-        builder.append("END:VCARD")
-        return builder.toString()
+        vcard = vcard.plus("END:VCARD")
+        return vcard
     }
 }

@@ -52,7 +52,6 @@ class QrCodeEncoder {
     private fun generateImageAsBase64(textToBeEncoded: String): QrCodeProcessingResult? {
         val result = QrCodeProcessingResult()
         result.encodedText = textToBeEncoded
-        var imageText = ""
         try {
             val qrCodeWriter = QRCodeWriter()
             val bitMatrix = qrCodeWriter.encode(textToBeEncoded, BarcodeFormat.QR_CODE, size, size, createHintMap())
@@ -75,7 +74,7 @@ class QrCodeEncoder {
             val myFile = File.createTempFile(fileName, ".$fileType")
             ImageIO.write(image, fileType, myFile)
             val bytes = FileUtils.readFileToByteArray(myFile)
-            imageText = "data:image/png;base64,${Base64Utils.encodeToString(bytes)}"
+            val imageText = "data:image/png;base64,${Base64Utils.encodeToString(bytes)}"
             result.image = imageText
         } catch (e: Exception) {
             val msg = "Processing QR code failed."
