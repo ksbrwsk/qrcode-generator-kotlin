@@ -19,7 +19,7 @@
         <webjars-locator.version>0.45</webjars-locator.version>
         <font-awesome.version>6.3.0</font-awesome.version>
         <bootstrap.version>5.2.3</bootstrap.version>
-        <zxing.version>3.5.0</zxing.version>
+        <zxing.version>3.5.1</zxing.version>
         <commons-io.version>2.11.0</commons-io.version>
         <logback.version>1.2.8</logback.version>
     </properties>
