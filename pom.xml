@@ -21,7 +21,6 @@
         <bootstrap.version>5.2.3</bootstrap.version>
         <zxing.version>3.5.0</zxing.version>
         <commons-io.version>2.11.0</commons-io.version>
-        <logback.version>1.2.8</logback.version>
     </properties>
 
     <dependencies>
@@ -83,6 +82,10 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

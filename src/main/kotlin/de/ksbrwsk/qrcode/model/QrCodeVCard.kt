@@ -1,7 +1,7 @@
 package de.ksbrwsk.qrcode.model
 
 import org.springframework.validation.annotation.Validated
-import javax.validation.constraints.NotEmpty
+import jakarta.validation.constraints.NotEmpty
 
 @Validated
 data class QrCodeVCard(@field:NotEmpty val name: String, @field:NotEmpty val lastname: String) {
