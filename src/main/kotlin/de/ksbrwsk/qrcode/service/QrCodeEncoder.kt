@@ -8,7 +8,6 @@ import de.ksbrwsk.qrcode.model.*
 import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import org.springframework.util.Base64Utils
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
@@ -74,7 +73,7 @@ class QrCodeEncoder {
             val myFile = File.createTempFile(fileName, ".$fileType")
             ImageIO.write(image, fileType, myFile)
             val bytes = FileUtils.readFileToByteArray(myFile)
-            val imageText = "data:image/png;base64,${Base64Utils.encodeToString(bytes)}"
+            val imageText = "data:image/png;base64,${Base64.getEncoder().encodeToString(bytes)}"
             result.image = imageText
         } catch (e: Exception) {
             val msg = "Processing QR code failed."
